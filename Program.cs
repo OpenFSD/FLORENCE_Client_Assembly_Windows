@@ -4,23 +4,19 @@ namespace FLORENCE
 {
     public class Program
     {
-        //private static FLORENCE.framework framework;
-        private static FLORENCE.Client networkingClient;
+        static public FLORENCE.Framework framework;
+        static public FLORENCE.Frame.Client networkingClient;
 
         public static void Main(String[] args)
         {
             System.Console.WriteLine("FLORENCE START");
 
-            //framework = new FLORENCE.framework();
-            //while (framework == null) { /* wait untill created */ }
+            framework = new FLORENCE.Framework();
+            while (framework == null) { /* wait untill created */ }
 
             Valve.Sockets.Library.Initialize();
-            networkingClient = new FLORENCE.Client();
+            networkingClient = new FLORENCE.Frame.Client();
+            while (networkingClient == null) { /* wait untill created */ }
         }
-
-        //public static FLORENCE.framework Get_Framework()
-        //{
-        //    return framework;
-        //}
     }
 }

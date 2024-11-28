@@ -1,0 +1,5 @@
+C:\Users\Legel.DESKTOP-RKOK0RG\source\repos\FLORENCE_Client_Assembly_Windows\obj\Debug\net8.0\FLORENCE_Client_Assembly_Windows.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Legel.DESKTOP-RKOK0RG\source\repos\FLORENCE_Client_Assembly_Windows\obj\Debug\net8.0\FLORENCE_Client_Assembly_Windows.AssemblyInfoInputs.cache
+C:\Users\Legel.DESKTOP-RKOK0RG\source\repos\FLORENCE_Client_Assembly_Windows\obj\Debug\net8.0\FLORENCE_Client_Assembly_Windows.AssemblyInfo.cs
+C:\Users\Legel.DESKTOP-RKOK0RG\source\repos\FLORENCE_Client_Assembly_Windows\obj\Debug\net8.0\FLORENCE_Client_Assembly_Windows.csproj.CoreCompileInputs.cache
+C:\Users\Legel.DESKTOP-RKOK0RG\source\repos\FLORENCE_Client_Assembly_Windows\obj\Debug\net8.0\FLORENCE_Client_Assembly_Windows.sourcelink.json
