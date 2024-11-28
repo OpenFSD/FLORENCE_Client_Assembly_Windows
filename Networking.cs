@@ -97,9 +97,15 @@ namespace FLORENCE.Frame
 
         static public void CreateAndSendNewMessage()
         {
-            data = new byte[64];
-            stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1][];
-            stackOutboundSockets[0]
+            
+            //byte[] temp = new byte[64];
+
+           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1][];
+           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1] = new byte[64];
+           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1] = temp;
+
+           // data = stackOutboundSockets[0];
+            
             sockets.SendMessageToConnection(connection, data);
         }
 
