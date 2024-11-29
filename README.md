@@ -15,10 +15,10 @@
 ## Dependencies
 ### FLORENCE Server Assembly Windows
 - https://github.com/OpenFSD/FLORENCE_Server_Assembly_Windows/tree/master
-### Static Server Library
+#### Static Server Library
 - https://github.com/OpenFSD/FLORENCE_Server_Library_Windows
   
-### Valve Software: GameNetworkingSockets Dynamic Link Library
+#### Valve Software: GameNetworkingSockets Dynamic Link Library
 - https://github.com/ValveSoftware/GameNetworkingSockets
   
 ## Development History
