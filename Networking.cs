@@ -54,7 +54,7 @@ namespace FLORENCE.Frame
 
             Address address = new Address();
 
-            address.SetAddress("::1", port);
+            //address.SetAddress("::1", port);
 
             connection = client.Connect(ref address);
 
@@ -106,13 +106,13 @@ namespace FLORENCE.Frame
 
            // data = stackOutboundSockets[0];
             
-            sockets.SendMessageToConnection(connection, data);
+            //sockets.SendMessageToConnection(connection, data);
         }
 
         static public void CopyPayloadFromMessage()
         {
             byte[] buffer = new byte[1024];
-            netMessage.CopyTo(buffer);
+            //netMessage.CopyTo(buffer);
         }
 
         static public void SetA_HookForDebugInformation()
