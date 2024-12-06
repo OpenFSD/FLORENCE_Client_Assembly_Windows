@@ -14,14 +14,16 @@ namespace FLORENCE.Frame
     {
         static private NetworkingSockets client = null;
         static private byte[] data = null;
-        static private byte[][] stackOutboundSockets = null;
+        static private Valve.Sockets.NetworkingSockets sockets = null;
+        static int praiseEventId = 0;
+        const string fileName = "Packet.dat";
 
-        public Networking() 
+        public Networking()
         {
             client = new NetworkingSockets();
             data = new byte[64];
-            stackOutboundSockets = new byte[1][];
-            stackOutboundSockets[0] = new byte[64];
+            sockets = new NetworkingSockets();
+            praiseEventId = new Int16();
         }
 
         static public void CreateNetworkingClient()
@@ -95,17 +97,43 @@ namespace FLORENCE.Frame
             }
         }
 
-        static public void CreateAndSendNewMessage()
+        static public void CreateAndSendNewMessage(int praiseEventId)
         {
-            
-            //byte[] temp = new byte[64];
+            Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
+                Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                0,
+                Framework.GetClient().GetGlobal().Get_NumCores(),
+                Framework.GetClient().GetGlobal()
+            );
+            using (var stream = File.Open(fileName, FileMode.Open))
+            {
+                using (BinaryWriter writer = new BinaryWriter(File.Open("D:\\MyBinaryFile.bin", FileMode.Create)))
+                {
+                    if (File.Exists(fileName))
+                    {
+                        switch (praiseEventId)
+                        {
+                            case 0:
+                                writer.Write((Int16)praiseEventId);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().X);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().Y);
+                                writer.Write(true);
+                                break;
 
-           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1][];
-           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1] = new byte[64];
-           // stackOutboundSockets[stackOutboundSockets.GetLength(0) + 1] = temp;
+                            case 1:
+                                writer.Write((Int16)praiseEventId);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition().X);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition().Y);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition().Z);
+                                writer.Write(true);
+                                break;
 
-           // data = stackOutboundSockets[0];
-            
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
             //sockets.SendMessageToConnection(connection, data);
         }
 
@@ -113,6 +141,39 @@ namespace FLORENCE.Frame
         {
             byte[] buffer = new byte[1024];
             //netMessage.CopyTo(buffer);
+
+            Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
+                Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                0,
+                Framework.GetClient().GetGlobal().Get_NumCores(),
+                Framework.GetClient().GetGlobal()
+            );
+            using (var stream = File.Open(fileName, FileMode.Open))
+            {
+                using (BinaryReader reader = new BinaryReader(File.Open("D:\\MyBinaryFile2.bin", FileMode.Open)))
+                {
+                    if (File.Exists(fileName))
+                    {
+                        var swithc_praiseEventId = reader.ReadUInt16();
+                        //Console.WriteLine("Error Code : " + reader.ReadString());
+                        // Console.WriteLine("Message : " + reader.ReadString());
+                        // Console.WriteLine("Restart Explorer : " + reader.ReadBoolean());
+                        switch (swithc_praiseEventId)
+                        {
+                            case 0:
+                                //data = new byte[64];
+                                break;
+
+                            case 1:
+                                //ToDo
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         static public void SetA_HookForDebugInformation()

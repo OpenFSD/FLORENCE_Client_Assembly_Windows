@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FLORENCE.Frame.Cli.Dat;
+using FLORENCE.Frame.Cli.Exe;
+using FLORENCE.Frame.Cli.Exe.Wrt;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,11 +12,18 @@ namespace FLORENCE.Frame.Cli
 {
     public class Execute
     {
+        static private FLORENCE.Frame.Cli.Exe.WriteEnable writeEnable;
         private Thread[] threads;
         private Thread new_thread;
 
         public Execute(int numberOfCores) 
         {
+            writeEnable = new FLORENCE.Frame.Cli.Exe.WriteEnable();
+            while (writeEnable == null) { /* Wait while is created */ }
+            writeEnable.Initialise_Control(
+                Framework.GetClient().GetGlobal(),
+                numberOfCores
+            );
             Thread[] threads = new Thread[numberOfCores];//NUMBER OF CORES
 
         }
@@ -23,7 +33,7 @@ namespace FLORENCE.Frame.Cli
             Global global
         )
         {
-            
+
         }
 
         public void Initialise(
@@ -41,12 +51,14 @@ namespace FLORENCE.Frame.Cli
             int numberOfCores
         )
         {
+            this.threads[0] = System.Threading.Thread.CurrentThread;
+
             this.threads = new Thread[numberOfCores];
             this.new_thread = new Thread(Algo.IO_ListenRespond.Thread_io_ListenRespond);
             this.new_thread.Start();
-            this.threads[0] = this.new_thread;
+            this.threads[1] = this.new_thread;
 
-            for(int index = 1; index < numberOfCores; index++)
+            for(int index = 2; index < numberOfCores; index++)
             {
                 this.new_thread = new Thread(Algo.Concurrent.Thread_concurrent);
                 this.new_thread.Start();
@@ -66,6 +78,11 @@ namespace FLORENCE.Frame.Cli
         public Thread GetThread(int index)
         {
             return threads[index];
+        }
+
+        public FLORENCE.Frame.Cli.Exe.WriteEnable GetWriteEnable()
+        {
+            return writeEnable;
         }
     }   
 }

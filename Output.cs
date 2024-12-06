@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FLORENCE.Frame.Cli.Dat.In;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +10,15 @@ namespace FLORENCE.Frame.Cli.Dat
 {
     public class Output
     {
+        private FLORENCE.Frame.Cli.Dat.In.Player player;
+
+        static private int praiseEventId;
+        static private Object praiseOutputBuffer_Subset;
+//===
+//===
+        static private FLORENCE.Frame.Cli.Dat.In.Praise0_Output praise0_Output;
+//===
+//===
         private static float[] vertices = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -63,6 +74,15 @@ namespace FLORENCE.Frame.Cli.Dat
 
         public Output()
         {
+            player = new FLORENCE.Frame.Cli.Dat.In.Player();
+
+            praiseEventId = new int();
+            praiseEventId = 0;
+
+            praiseOutputBuffer_Subset = null;
+
+            praise0_Output = new FLORENCE.Frame.Cli.Dat.In.Praise0_Output();
+
             System.Console.WriteLine("FLORENCE: Output");
         }
         public void Initalise_Graphics()
@@ -81,10 +101,38 @@ namespace FLORENCE.Frame.Cli.Dat
         {
             return indices;
         }
+        public Object Get_OutputBufferSubset()
+        {
+            return praiseOutputBuffer_Subset;
+        }
 
         public float[] Get_Vertices()
         {
             return vertices;
+        }
+        public FLORENCE.Frame.Cli.Dat.In.Player GetPlayer()
+        {
+            return player;
+        }
+
+        public int GetPraiseEventId()
+        {
+            return praiseEventId;
+        }
+
+        public FLORENCE.Frame.Cli.Dat.In.Praise0_Output GetPraise0_Output()
+        {
+            return praise0_Output;
+        }
+
+        public void Set_InputBuffer_SubSet(Object value)
+        {
+            praiseOutputBuffer_Subset = value;
+        }
+
+        public void SetPraiseEventId(int value)
+        {
+            praiseEventId = value;
         }
     }
 }

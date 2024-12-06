@@ -1,4 +1,5 @@
 ﻿using FLORENCE.Frame.Cli.Dat.Out.Gfx;
+using FLORENCE.Frame.Cli.Exe.Wrt;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -24,11 +25,8 @@ namespace FLORENCE.Frame.Cli.Dat.Out
         private FLORENCE.Frame.Cli.Dat.Out.Gfx.Texture texture0;
         private FLORENCE.Frame.Cli.Dat.Out.Gfx.Texture texture1;
 
-        private FLORENCE.Frame.Cli.Dat.Out.Gfx.Camera camera;
-
-        private bool _firstMove = true;
-
-        private Vector2 _lastPos;
+        // Get the mouse state
+        MouseState mouse = null;
 
         private Matrix4 view;
         private Matrix4 projection;
@@ -41,6 +39,7 @@ namespace FLORENCE.Frame.Cli.Dat.Out
            nws
         )
         {
+            mouse = MouseState;
             System.Console.WriteLine("FLORENCE: Graphics & GameWindow");
         }
 
@@ -128,7 +127,7 @@ namespace FLORENCE.Frame.Cli.Dat.Out
             shader.SetInt("texture0", 0);
             shader.SetInt("texture1", 1);
 
-            camera = new Camera(Vector3.UnitZ * 3, Size.X / (float)Size.Y);
+
             //CursorState = CursorState.Grabbed;
             /*
             view = Matrix4.CreateTranslation(0.0f, 0.0f, -3.0f);
@@ -160,8 +159,8 @@ namespace FLORENCE.Frame.Cli.Dat.Out
 
             var model = Matrix4.Identity * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(time));
             shader.SetMatrix4("model", model);
-            shader.SetMatrix4("view", camera.GetViewMatrix());
-            shader.SetMatrix4("projection", camera.GetProjectionMatrix());
+            shader.SetMatrix4("view", Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetCamera().GetViewMatrix());
+            shader.SetMatrix4("projection", Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetCamera().GetProjectionMatrix());
 
             /*
             // change colour with time \/ \/ \/
@@ -207,60 +206,65 @@ namespace FLORENCE.Frame.Cli.Dat.Out
                 this.Close();
             }
 
-            const float cameraSpeed = 1.5f;
-            const float sensitivity = 0.2f;
-
             if (KeyboardState.IsKeyDown(Keys.W))
             {
-                camera.Position += camera.Front * cameraSpeed * (float)e.Time; // Forward
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Move_Fowards(e);
             }
 
             if (KeyboardState.IsKeyDown(Keys.S))
             {
-                camera.Position -= camera.Front * cameraSpeed * (float)e.Time; // Backwards
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Move_Backwards(e);
+                //
             }
             if (KeyboardState.IsKeyDown(Keys.A))
             {
-                camera.Position -= camera.Right * cameraSpeed * (float)e.Time; // Left
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Move_Left(e);
+                //
             }
             if (KeyboardState.IsKeyDown(Keys.D))
             {
-                camera.Position += camera.Right * cameraSpeed * (float)e.Time; // Right
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Move_Right(e);
+                //
             }
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
-                camera.Position += camera.Up * cameraSpeed * (float)e.Time; // Up
+                //
             }
             if (KeyboardState.IsKeyDown(Keys.LeftShift))
             {
-                camera.Position -= camera.Up * cameraSpeed * (float)e.Time; // Down
+                //
             }
 
-            // Get the mouse state
-            var mouse = MouseState;
-
-            if (_firstMove) // This bool variable is initially set to true.
+            if (Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Get_isFirstMove()) // This bool variable is initially set to true.
             {
-                _lastPos = new Vector2(mouse.X, mouse.Y);
-                _firstMove = false;
+                //TODO
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Set_isFirstMove(false);
             }
             else
             {
-                // Calculate the offset of the mouse position
-                var deltaX = mouse.X - _lastPos.X;
-                var deltaY = mouse.Y - _lastPos.Y;
-                _lastPos = new Vector2(mouse.X, mouse.Y);
+                Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
+                    Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                    0,
+                    Framework.GetClient().GetGlobal().Get_NumCores(),
+                    Framework.GetClient().GetGlobal()
+                );
 
-                // Apply the camera pitch and yaw (we clamp the pitch in the camera class)
-                camera.Yaw += deltaX * sensitivity;
-                camera.Pitch -= deltaY * sensitivity; // Reversed since y-coordinates range from bottom to top
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().CheckBufferAnomalyInFlagArray();
+                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().GenerateStackOfInputActions();
+
+                Framework.GetClient().GetExecute().GetWriteEnable().Write_End(
+                    Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                    0,
+                    Framework.GetClient().GetGlobal().Get_NumCores(),
+                    Framework.GetClient().GetGlobal()
+                );
             }
         }
+
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            camera.Fov -= e.OffsetY;
+            Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetCamera().Fov -= e.OffsetY;
         }
         /*
 public static float Get_New_greenValue()
@@ -270,5 +274,9 @@ if (periodOfRefresh == 2000) periodOfRefresh = 0;
 return (float)Math.Sin(periodOfRefresh) / (2.0f + 0.5f);
 }
 */
+        public Vector2 GetNewMousePosition()
+        {
+            return new Vector2(mouse.Position.X, mouse.Position.Y);
+        }
     }
 }
