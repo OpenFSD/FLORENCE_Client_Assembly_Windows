@@ -12,12 +12,15 @@ namespace FLORENCE.Frame.Cli
 {
     public class Execute
     {
-        static private FLORENCE.Frame.Cli.Exe.WriteEnable writeEnable;
-        private Thread[] threads;
-        private Thread new_thread;
+        static private FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control execute_Control;
+        static private FLORENCE.Frame.Cli.Exe.WriteEnable writeEnable = null;
+        private Thread[] threads = null;
+        private Thread new_thread = null;
 
         public Execute(int numberOfCores) 
         {
+            execute_Control = null;
+
             writeEnable = new FLORENCE.Frame.Cli.Exe.WriteEnable();
             while (writeEnable == null) { /* Wait while is created */ }
             writeEnable.Initialise_Control(
@@ -33,7 +36,10 @@ namespace FLORENCE.Frame.Cli
             Global global
         )
         {
-
+            execute_Control = new FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control(
+                global,
+                numberOfCores
+            );
         }
 
         public void Initialise(
@@ -52,7 +58,7 @@ namespace FLORENCE.Frame.Cli
         )
         {
             this.threads[0] = System.Threading.Thread.CurrentThread;
-
+            
             this.threads = new Thread[numberOfCores];
             this.new_thread = new Thread(Algo.IO_ListenRespond.Thread_io_ListenRespond);
             this.new_thread.Start();
@@ -68,11 +74,17 @@ namespace FLORENCE.Frame.Cli
             //{
 
             //}
+            Framework.GetClient().GetExecute().GetExecute_Control().SetConditionCodeOfThisThreadedCore((Int16)0);
         }
 
         public void Create_And_Run_Graphics()
         {
-            Framework.GetClient().GetData().GetOutput().Initalise_Graphics();
+            Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetOutBufferToWrite()).Initalise_Graphics();
+        }
+
+        public FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control GetExecute_Control()
+        {
+            return execute_Control;
         }
 
         public Thread GetThread(int index)

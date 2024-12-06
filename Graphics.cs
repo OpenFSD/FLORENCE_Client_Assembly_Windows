@@ -69,8 +69,8 @@ namespace FLORENCE.Frame.Cli.Dat.Out
             );
             GL.BufferData(
                 BufferTarget.ArrayBuffer,
-                Framework.GetClient().GetData().GetOutput().Get_Vertices().Length * sizeof(float),
-                Framework.GetClient().GetData().GetOutput().Get_Vertices(),
+                Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetOutBufferToWrite()).Get_Vertices().Length * sizeof(float),
+                Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetOutBufferToWrite()).Get_Vertices(),
                 BufferUsageHint.StaticDraw
             );
 
@@ -82,8 +82,8 @@ namespace FLORENCE.Frame.Cli.Dat.Out
             );
             GL.BufferData(
                 BufferTarget.ElementArrayBuffer,
-                Framework.GetClient().GetData().GetOutput().Get_Indices().Length * sizeof(uint),
-                Framework.GetClient().GetData().GetOutput().Get_Indices(),
+                Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetOutBufferToWrite()).Get_Indices().Length * sizeof(uint),
+                Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetOutBufferToWrite()).Get_Indices(),
                 BufferUsageHint.StaticDraw
             );
             // draw square /\ /\ /\
@@ -235,9 +235,10 @@ namespace FLORENCE.Frame.Cli.Dat.Out
                 //
             }
 
-            if (Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Get_isFirstMove()) // This bool variable is initially set to true.
+            if (Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Get_isFirstMove()) // This bool variable is initially set to true.
             {
                 //TODO
+                Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Set_isFirstMove(false);
                 Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Set_isFirstMove(false);
             }
             else
@@ -249,9 +250,9 @@ namespace FLORENCE.Frame.Cli.Dat.Out
                     Framework.GetClient().GetGlobal()
                 );
 
-                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().CheckBufferAnomalyInFlagArray();
-                Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().GenerateStackOfInputActions();
-
+                Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().CheckBufferAnomalyInFlagArray();
+                Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetInputControl().GenerateStackOfInputActions();
+                //TODO
                 Framework.GetClient().GetExecute().GetWriteEnable().Write_End(
                     Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
                     0,

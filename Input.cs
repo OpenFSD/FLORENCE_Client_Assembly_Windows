@@ -15,7 +15,7 @@ namespace FLORENCE.Frame.Cli.Dat
     {
         static private FLORENCE.Frame.Cli.Dat.In.Input_Control input_Control;
         private FLORENCE.Frame.Cli.Dat.In.Player player;
-        static private int praiseEventId;
+        static private Int16 praiseEventId;
         static private Object praiseInputBuffer_Subset;
 //======
 //======
@@ -82,6 +82,11 @@ namespace FLORENCE.Frame.Cli.Dat
         public void Set_InputBuffer_SubSet(Object value)
         {
             praiseInputBuffer_Subset = value;
+        }
+
+        public void SetPraiseEventId(Int16 value)
+        {
+            praiseEventId = value;
         }
     }
 }

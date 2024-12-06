@@ -10,6 +10,7 @@ namespace FLORENCE.Frame.Cli.Dat
 {
     public class Output
     {
+        static private FLORENCE.Frame.Cli.Dat.Out.Output_Control output_Control;
         private FLORENCE.Frame.Cli.Dat.In.Player player;
 
         static private int praiseEventId;
@@ -17,8 +18,9 @@ namespace FLORENCE.Frame.Cli.Dat
 //===
 //===
         static private FLORENCE.Frame.Cli.Dat.In.Praise0_Output praise0_Output;
-//===
-//===
+        static private FLORENCE.Frame.Cli.Dat.In.Praise1_Output praise1_Output;
+        //===
+        //===
         private static float[] vertices = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -82,6 +84,10 @@ namespace FLORENCE.Frame.Cli.Dat
             praiseOutputBuffer_Subset = null;
 
             praise0_Output = new FLORENCE.Frame.Cli.Dat.In.Praise0_Output();
+            while (praise0_Output == null) { /* Wait while is created */ }
+
+            praise1_Output = new FLORENCE.Frame.Cli.Dat.In.Praise1_Output();
+            while (praise1_Output == null) { /* Wait while is created */ }
 
             System.Console.WriteLine("FLORENCE: Output");
         }
@@ -97,6 +103,11 @@ namespace FLORENCE.Frame.Cli.Dat
             }
         }
 
+        public void InitialiseControl()
+        {
+            output_Control = new FLORENCE.Frame.Cli.Dat.Out.Output_Control();
+            while (output_Control == null) { /* Wait while is created */ }
+        }
         public uint[] Get_Indices()
         {
             return indices;

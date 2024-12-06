@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FLORENCE.Frame.Cli.Exe.Wrt
 {
-    public class WriteEnable_Control
+    public class Execute_Control
     {
         static private int coreId_For_WritePraise_Index;
         static private int[] count_CoreId_WriteActive;
@@ -19,7 +19,7 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
         static private bool praisingWrite;
         static private int[] que_CoreToWrite;
 
-        public WriteEnable_Control(
+        public Execute_Control(
             FLORENCE.Frame.Cli.Global global,
             int numberOfCores
         )
@@ -314,6 +314,16 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
         private void Set_coreIdForWritePraiseIndex(int value)
         {
             coreId_For_WritePraise_Index = value;
+        }
+
+        internal void SetConditionCodeOfThisThreadedCore(object coreId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool GetFlag_SystemInitialised(object ptr_MyNumImplementedCores)
+        {
+            throw new NotImplementedException();
         }
     }
 }

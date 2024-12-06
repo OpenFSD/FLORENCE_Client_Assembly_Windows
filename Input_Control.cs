@@ -20,24 +20,22 @@ namespace FLORENCE.Frame.Cli.Dat.In
 
         public void CheckBufferAnomalyInFlagArray()
         {
-            for (int praiseEventId_A = 0; praiseEventId_A < numberOfPraises; praiseEventId_A++)
+            for (int praiseEventId = 0; praiseEventId < numberOfPraises; praiseEventId++)
             {
-                switch (praiseEventId_A)
+                switch (praiseEventId)
                 {
                     case 0:
                         if ((Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().X == Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().X)
                             || (Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().Y == Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos().Y))
                         {
-                            Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Set_MousePos(Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetMousePos());
-                            isSelected_PraiseEventId[praiseEventId_A] = true;
+                            isSelected_PraiseEventId[praiseEventId] = true;
                         }
                         break;
 
                     case 1:
                         if (Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition() != Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition())
                         {
-                            Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().Set_PlayerPosition(Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPlayer().GetPlayerPosition());
-                            isSelected_PraiseEventId[praiseEventId_A] = true;
+                            isSelected_PraiseEventId[praiseEventId] = true;
                         }
                         break;
 
@@ -51,38 +49,24 @@ namespace FLORENCE.Frame.Cli.Dat.In
         }
 
         public void GenerateStackOfInputActions()
-        { 
-            for (int praiseEventId_B = 0; praiseEventId_B < numberOfPraises; praiseEventId_B++)
+        {
+            Framework.GetClient().GetData().Flip_InBufferToWrite();
+            for (int praiseEventId = 0; praiseEventId < numberOfPraises; praiseEventId++)
             {
-                if (isSelected_PraiseEventId[praiseEventId_B] == true)
+                if (isSelected_PraiseEventId[praiseEventId] == true)
                 {
-                    SelectSetInputSubsetForGivenPraiseEventId(praiseEventId_B);
-                    switch (praiseEventId_B)
-                    {
-//===
-//===
-                        case 0:
-                            Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Set_Mouse_X(
-                                Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Get_Mouse_X()
-                            );
-                            Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Set_Mouse_Y(
-                                Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Get_Mouse_Y()
-                            );
-
-                            break;
-
-                        case 1:
-                            
-                            break;
-//===
-//===
-                    }
-                    Networking.CreateAndSendNewMessage(praiseEventId_B);
-                    isSelected_PraiseEventId[praiseEventId_B] = false;
+                    Framework.GetClient().GetData().Set_New_InputBuffer(new FLORENCE.Frame.Cli.Dat.Input());
+                    SelectSetInputSubset(praiseEventId);
+                    LoadInputSubset(praiseEventId);
+                    Framework.GetClient().GetData().GetData_Control().PushToStackOfInputActions(
+                        Framework.GetClient().GetData().Get_StackOfInputActions(),
+                        Framework.GetClient().GetData().GetNewInputBuffer()
+                    );
+                    isSelected_PraiseEventId[praiseEventId] = false;
                 }
             }
         }
-        void SelectSetInputSubsetForGivenPraiseEventId(
+        private void LoadInputSubset(
             int praiseEventId
         )
         {
@@ -91,14 +75,46 @@ namespace FLORENCE.Frame.Cli.Dat.In
 //===
 //===
                 case 0:
-                    Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).Set_InputBuffer_SubSet(
-                        Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input()
+                    Framework.GetClient().GetData().GetNewInputBuffer().GetPraise0_Input().Set_Mouse_X(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Get_Mouse_X()
+                    );
+                    Framework.GetClient().GetData().GetNewInputBuffer().GetPraise0_Input().Set_Mouse_Y(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input().Get_Mouse_Y()
+                    );
+                    break;
+
+                case 1:
+                    Framework.GetClient().GetData().GetNewInputBuffer().GetPraise1_Input().Set_Position_X(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise1_Input().Get_Position_X()
+                    );
+                    Framework.GetClient().GetData().GetNewInputBuffer().GetPraise1_Input().Set_Position_Y(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise1_Input().Get_Position_Y()
+                    );
+                    Framework.GetClient().GetData().GetNewInputBuffer().GetPraise1_Input().Set_Position_Z(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise1_Input().Get_Position_Z()
+                    );
+                    break;
+//===
+//===
+            }
+        }
+        private void SelectSetInputSubset(
+            int praiseEventId
+        )
+        {
+            switch (praiseEventId)
+            {
+//===
+//===
+                case 0:
+                    Framework.GetClient().GetData().GetNewInputBuffer().Set_InputBuffer_SubSet(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise0_Input()
                     );
         			break;
 
 		        case 1:
-                    Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).Set_InputBuffer_SubSet(
-                        Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise1_Input()
+                    Framework.GetClient().GetData().GetNewInputBuffer().Set_InputBuffer_SubSet(
+                        Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetInBufferToWrite()).GetPraise1_Input()
                     );
                     break;
 //===

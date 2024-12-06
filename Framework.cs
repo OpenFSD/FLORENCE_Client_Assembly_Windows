@@ -8,7 +8,7 @@ namespace FLORENCE
 {
     public class Framework
     {
-        static private FLORENCE.Frame.Client client;
+        static private FLORENCE.Frame.Client client = null;
         //static private FLORENCE.Frame.Networking networkingClient;
 
         public Framework() 

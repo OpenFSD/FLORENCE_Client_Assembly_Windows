@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FLORENCE.Frame.Cli.Dat.In
+namespace FLORENCE.Frame.Cli.Dat.Out
 {
     public class Output_Control
     {
@@ -47,12 +47,16 @@ namespace FLORENCE.Frame.Cli.Dat.In
                         break;
                 }
             }
+        }
+        public void GenerateStackOfInputActions()
+        { 
             for (int praiseEventId_B = 0; praiseEventId_B < numberOfPraises; praiseEventId_B++)
             {
                 if (isSelected_PraiseEventId[praiseEventId_B] == true)
                 {
-  //                  SelectSetInputSubsetForGivenPraiseEventId(praiseEventId_B);
-//                    Networking.CreateAndSendNewMessage(praiseEventId_B);
+                    SelectSetInputSubsetForGivenPraiseEventId(praiseEventId_B);
+                    
+                    Networking.CreateAndSendNewMessage(praiseEventId_B);
                     isSelected_PraiseEventId[praiseEventId_B] = false;
                 }
             }

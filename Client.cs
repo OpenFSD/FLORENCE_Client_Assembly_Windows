@@ -1,4 +1,5 @@
 ﻿using FLORENCE;
+using FLORENCE.Frame.Cli;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +29,16 @@ namespace FLORENCE.Frame
 
             data = new FLORENCE.Frame.Cli.Data();
             while (data == null) { /* Wait while is created */ }
+            data.InitialiseControl();
 
             execute = new FLORENCE.Frame.Cli.Execute(
                 global.Get_NumCores()
             );
             while (execute == null) { /* Wait while is created */ }
+            execute.Initialise_Control(
+                global.Get_NumCores(),
+                global
+            );
 
             System.Console.WriteLine("FLORENCE: Client");
         }

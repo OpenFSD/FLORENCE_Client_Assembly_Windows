@@ -99,12 +99,6 @@ namespace FLORENCE.Frame
 
         static public void CreateAndSendNewMessage(int praiseEventId)
         {
-            Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
-                Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
-                0,
-                Framework.GetClient().GetGlobal().Get_NumCores(),
-                Framework.GetClient().GetGlobal()
-            );
             using (var stream = File.Open(fileName, FileMode.Open))
             {
                 using (BinaryWriter writer = new BinaryWriter(File.Open("D:\\MyBinaryFile.bin", FileMode.Create)))
