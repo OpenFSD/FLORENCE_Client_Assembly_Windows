@@ -12,13 +12,13 @@ namespace FLORENCE.Frame.Cli.Exe
         static private bool flag_SystemInitialised;
         static private bool[] flag_ThreadInitialised;
 
-        public Execute_Control()
+        public Execute_Control(int numberOfCores)
         {
             flag_SystemInitialised = new bool();
             flag_SystemInitialised = true;
 
-            flag_ThreadInitialised = new bool[Framework.GetClient().GetGlobal().Get_NumCores()];
-            for(Int16 index =0; index < Framework.GetClient().GetGlobal().Get_NumCores(); index++)
+            flag_ThreadInitialised = new bool[numberOfCores];
+            for(Int16 index =0; index < numberOfCores; index++)
             {
                 flag_ThreadInitialised[index] = new bool();
                 flag_ThreadInitialised[index] = true;

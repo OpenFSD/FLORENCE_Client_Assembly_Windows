@@ -249,22 +249,23 @@ namespace FLORENCE.Frame.Cli.Dat.Out
             }
             else
             {
-                //Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
-               //     Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
-               //     0,
-               //     Framework.GetClient().GetGlobal().Get_NumCores(),
-               //     Framework.GetClient().GetGlobal()
-               // );
+                Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
+                    Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                    0,
+                    Framework.GetClient().GetGlobal().Get_NumCores(),
+                    Framework.GetClient().GetGlobal()
+                );
 
                 Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetStateOfInBufferWrite()).GetInputControl().CheckBufferAnomalyInFlagArray();
                 Framework.GetClient().GetData().GetInputBuffer(!Framework.GetClient().GetData().GetStateOfInBufferWrite()).GetInputControl().GenerateStackOfInputActions();
                 //TODO
-               // Framework.GetClient().GetExecute().GetWriteEnable().Write_End(
-               //     Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
-               //     0,
-               //     Framework.GetClient().GetGlobal().Get_NumCores(),
-              //      Framework.GetClient().GetGlobal()
-               // );
+               
+                Framework.GetClient().GetExecute().GetWriteEnable().Write_End(
+                    Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                    0,
+                   Framework.GetClient().GetGlobal().Get_NumCores(),
+                    Framework.GetClient().GetGlobal()
+                );
             }
         }
 

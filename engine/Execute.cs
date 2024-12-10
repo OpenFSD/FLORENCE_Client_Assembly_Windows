@@ -12,7 +12,7 @@ namespace FLORENCE.Frame.Cli
 {
     public class Execute
     {
-        static private FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control execute_Control;
+        static private FLORENCE.Frame.Cli.Exe.Execute_Control execute_Control;
         static private FLORENCE.Frame.Cli.Exe.WriteEnable writeEnable = null;
         private Thread[] concurrent = null;
         private Thread listenRespond = null;
@@ -22,12 +22,8 @@ namespace FLORENCE.Frame.Cli
         {
             execute_Control = null;
 
-            writeEnable = new FLORENCE.Frame.Cli.Exe.WriteEnable();
-            while (writeEnable == null) { /* Wait while is created */ }
-            /*writeEnable.Initialise_Control(
-                 Framework.GetClient().GetGlobal(),
-                 numberOfCores
-             );*/
+
+
             concurrent = new Thread[numberOfCores];//NUMBER OF CORES
 
         }
@@ -37,15 +33,20 @@ namespace FLORENCE.Frame.Cli
             Global global
         )
         {
-            execute_Control = new FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control(
-                global,
-                numberOfCores
-            );
+            execute_Control = new FLORENCE.Frame.Cli.Exe.Execute_Control(numberOfCores);
+            while (execute_Control == null) { /* Wait while is created */ }
         }
 
         public void Initialise()
         {
             Framework.GetClient().GetAlgorithms().Initialise(Framework.GetClient().GetGlobal().Get_NumCores());
+            
+            writeEnable = new FLORENCE.Frame.Cli.Exe.WriteEnable();
+            while (writeEnable == null) { /* Wait while is created */ }
+            writeEnable.Initialise_Control(
+                 Framework.GetClient().GetGlobal(),
+                 Framework.GetClient().GetGlobal().Get_NumCores()
+             );
         }
 
         
@@ -78,7 +79,7 @@ namespace FLORENCE.Frame.Cli
             Framework.GetClient().GetData().GetOutputBuffer(Framework.GetClient().GetData().GetStateOfOutBufferWrite()).Initalise_Graphics();
         }
 
-        public FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control GetExecute_Control()
+        public FLORENCE.Frame.Cli.Exe.Execute_Control GetExecute_Control()
         {
             return execute_Control;
         }

@@ -24,12 +24,12 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
             int numberOfCores
         )
         {
-            int coreId_For_WritePraise_Index = new int();
+            coreId_For_WritePraise_Index = new int();
             coreId_For_WritePraise_Index = 0;
 
-            int[] count_CoreId_WriteActive = new int[4];//NUMBER OF CORES
-            int[] count_CoreId_WriteIdle = new int[4];//NUMBER OF CORES
-            int[] count_CoreId_WriteWait = new int[4];//NUMBER OF CORES
+            count_CoreId_WriteActive = new int[4];//NUMBER OF CORES
+            count_CoreId_WriteIdle = new int[4];//NUMBER OF CORES
+            count_CoreId_WriteWait = new int[4];//NUMBER OF CORES
             for (int i = 0; i < numberOfCores; i++)
             {
                 count_CoreId_WriteActive[i] = 0;
@@ -37,7 +37,7 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
                 count_CoreId_WriteWait[i] = 0;
             }
             
-            bool[][] flag_WriteState = new bool[4][];//NUMBER OF CORES
+            flag_WriteState = new bool[4][];//NUMBER OF CORES
             for (int i = 0; i < numberOfCores; i++)
             {
                 flag_WriteState[i] = new bool[2];
@@ -55,13 +55,13 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
             flag_WriteState[3][0] = global.GetConst_Write_IDLE(0);
             flag_WriteState[3][1] = global.GetConst_Write_IDLE(1);
 
-            int new_coreId_For_WritePraise_Index = new int();
+            new_coreId_For_WritePraise_Index = new int();
             new_coreId_For_WritePraise_Index = 0;
 
-            bool praisingWrite = new bool();
+            praisingWrite = new bool();
             praisingWrite = false;
 
-            int[] que_CoreToWrite = new int[4];//NUMBER OF CORES
+            que_CoreToWrite = new int[4];//NUMBER OF CORES
             for (int index = 0; index < 4/* NUMBER OF CORES */; index++)
             {
                 que_CoreToWrite[index] = index;
@@ -74,7 +74,7 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
             int numberOfCores
         )
         {
-            for (int index = 0; index < numberOfCores; index++)
+            for (int index = 0; index < 2; index++)
             {
                 SetFlag_writeState(coreId, index, global.GetConst_Write_WRITE(index));
             }
