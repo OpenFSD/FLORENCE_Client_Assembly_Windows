@@ -20,6 +20,7 @@ namespace FLORENCE.Frame.Cli
         static private FLORENCE.Frame.Cli.Dat.Settings settings;
         static private List<FLORENCE.Frame.Cli.Dat.Input> stack_InputActions;
         static private List<FLORENCE.Frame.Cli.Dat.Output> stack_OutputRecieves;
+        static private FLORENCE.Frame.Cli.Dat.Input transmitInputBuffer;
         static private FLORENCE.Frame.Cli.Dat.User_I user_IO;
         static private FLORENCE.Frame.Cli.Dat.Map_Default mapDefault;
 
@@ -72,6 +73,9 @@ namespace FLORENCE.Frame.Cli
             stack_OutputRecieves = new List<FLORENCE.Frame.Cli.Dat.Output>();
             while (stack_OutputRecieves == null) { /* Wait while is created */ }
 
+            transmitInputBuffer = new FLORENCE.Frame.Cli.Dat.Input();
+            while (transmitInputBuffer == null) { /* Wait while is created */ }
+
             user_IO = new FLORENCE.Frame.Cli.Dat.User_I();
             while (user_IO == null) { /* Wait while is created */ }
 
@@ -118,16 +122,16 @@ namespace FLORENCE.Frame.Cli
             return arena;
         }
 
-        public Data_Control GetData_Control()
+        public FLORENCE.Frame.Cli.Dat.Data_Control GetData_Control()
         {
             return data_Control;
         }
 
-        public Input GetEmptyInput()
+        public FLORENCE.Frame.Cli.Dat.Input GetEmptyInput()
         {
             return empty_InputBuffer;   
         }
-        public Output GetEmptyOutput()
+        public FLORENCE.Frame.Cli.Dat.Output GetEmptyOutput()
         {
             return empty_OutputBuffer;
         }
@@ -196,6 +200,11 @@ namespace FLORENCE.Frame.Cli
             return stack_OutputRecieves;
         }
 
+        public FLORENCE.Frame.Cli.Dat.Input GetTransmitInputBuffer()
+        {
+            return transmitInputBuffer;
+        }
+
         public FLORENCE.Frame.Cli.Dat.User_I GetUserIO()
         {
             return user_IO;
@@ -219,6 +228,11 @@ namespace FLORENCE.Frame.Cli
         public void SetThirdOutputBuffer(FLORENCE.Frame.Cli.Dat.Output value)
         {
             outputThirdBuffer = value;
+        }
+
+        public void SetTransmitInputBuffer(FLORENCE.Frame.Cli.Dat.Input value)
+        {
+            transmitInputBuffer = value;
         }
     }
 }

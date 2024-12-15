@@ -10,7 +10,7 @@ namespace FLORENCE.Frame.Cli.Dat
 {
     public class Data_Control
     {
-        static private bool flag_InputStackLoaded;
+        static private bool flag_TransmitInputStackLoaded;
         static private bool flag_OutputStackLoaded;
 
         public Data_Control() 
@@ -48,9 +48,9 @@ namespace FLORENCE.Frame.Cli.Dat
             
         }
 
-        public bool GetFlag_InputStackLoaded()
+        public bool GetFlag_TransmitInputStackLoaded()
         {
-            return flag_InputStackLoaded;
+            return flag_TransmitInputStackLoaded;
         }
 
         public bool GetFlag_OutputStackLoaded()
@@ -58,9 +58,9 @@ namespace FLORENCE.Frame.Cli.Dat
             return flag_OutputStackLoaded;
         }
 
-        public void SetFlag_InputStackLoaded(bool value)
+        public void SetFlag_TransmitInputStackLoaded(bool value)
         {
-            flag_InputStackLoaded = value;
+            flag_TransmitInputStackLoaded = value;
         }
         public void SetFlag_OutputStackLoaded(bool value)
         {

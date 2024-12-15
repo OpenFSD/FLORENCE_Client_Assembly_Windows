@@ -12,23 +12,16 @@ namespace FLORENCE.Frame
 {
     public class Networking
     {
-        static private NetworkingSockets client = null;
-        static private byte[] data = null;
         static private Valve.Sockets.NetworkingSockets sockets = null;
-        static int praiseEventId = 0;
-        const string fileName = "Packet.dat";
 
         public Networking()
         {
-            client = new NetworkingSockets();
-            data = new byte[64];
             sockets = new NetworkingSockets();
-            praiseEventId = new Int16();
         }
 
         static public void CreateNetworkingClient()
         {
-            //NetworkingSockets client = new NetworkingSockets();
+            NetworkingSockets client = new NetworkingSockets();
 
             uint connection = 0;
 
@@ -99,18 +92,18 @@ namespace FLORENCE.Frame
 
         static public void CreateAndSendNewMessage(int praiseEventId)
         {
-            using (var stream = File.Open(fileName, FileMode.Open))
+            using (var stream = File.Open("..\\resources\\Binary_PacketData.bin", FileMode.Create))
             {
-                using (BinaryWriter writer = new BinaryWriter(File.Open("D:\\MyBinaryFile.bin", FileMode.Create)))
+                using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    if (File.Exists(fileName))
+                    if (File.Exists("..\\resources\\Binary_PacketData.bin"))
                     {
                         switch (praiseEventId)
                         {
                             case 0:
                                 writer.Write((Int16)praiseEventId);
-                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetStateOfInBufferWrite()).GetPlayer().GetMousePos().X);
-                                writer.Write((Int16)Framework.GetClient().GetData().GetInputBuffer(Framework.GetClient().GetData().GetStateOfInBufferWrite()).GetPlayer().GetMousePos().Y);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetTransmitInputBuffer().GetPlayer().GetMousePos().X);
+                                writer.Write((Int16)Framework.GetClient().GetData().GetTransmitInputBuffer().GetPlayer().GetMousePos().Y);
                                 writer.Write(true);
                                 break;
 
@@ -128,7 +121,8 @@ namespace FLORENCE.Frame
                     }
                 }
             }
-            //sockets.SendMessageToConnection(connection, data);
+            var data = File.Open("..\\resources\\Binary_PacketData.bin", FileMode.Open);
+            sockets.SendMessageToConnection(connection, data);
         }
 
         static public void CopyPayloadFromMessage()
@@ -142,20 +136,22 @@ namespace FLORENCE.Frame
                 Framework.GetClient().GetGlobal().Get_NumCores(),
                 Framework.GetClient().GetGlobal()
             );
-            using (var stream = File.Open(fileName, FileMode.Open))
+            using (var stream = File.Open("..\\resources\\Binary_PacketData.bin", FileMode.Open))
             {
-                using (BinaryReader reader = new BinaryReader(File.Open("..\\..\\..\\resources\\Binary_PacketData.bin", FileMode.Open)))
+                using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    if (File.Exists(fileName))
+                    if (File.Exists("..\\resources\\Binary_PacketData.bin"))
                     {
-                        var swithc_praiseEventId = reader.ReadUInt16();
+                        var switch_praiseEventId = reader.ReadUInt16();
                         //Console.WriteLine("Error Code : " + reader.ReadString());
                         // Console.WriteLine("Message : " + reader.ReadString());
                         // Console.WriteLine("Restart Explorer : " + reader.ReadBoolean());
-                        switch (swithc_praiseEventId)
+                        switch (switch_praiseEventId)
                         {
                             case 0:
                                 //data = new byte[64];
+                                mouse_X = reader.ReadUInt16();
+                                mouse_Y = reader.ReadUInt16();
                                 break;
 
                             case 1:
@@ -180,5 +176,7 @@ namespace FLORENCE.Frame
 
             utils.SetDebugCallback(DebugType.Everything, debug);
         }
+
+
     }
 }

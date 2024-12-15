@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FLORENCE.Frame.Cli.Exe.Wrt
 {
-    public class Execute_Control
+    public class WriteEnable_Control
     {
         static private int coreId_For_WritePraise_Index;
         static private int[] count_CoreId_WriteActive;
@@ -19,7 +19,7 @@ namespace FLORENCE.Frame.Cli.Exe.Wrt
         static private bool praisingWrite;
         static private int[] que_CoreToWrite;
 
-        public Execute_Control(
+        public WriteEnable_Control(
             FLORENCE.Frame.Cli.Global global,
             int numberOfCores
         )

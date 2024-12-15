@@ -8,6 +8,10 @@ namespace FLORENCE.Frame.Cli.Algo.UserAlg
 {
     public class Praise0_Algorithm
     {
+        public Praise0_Algorithm() 
+        { 
+        
+        }
         public void Do_Praise(
             FLORENCE.Frame.Cli.Dat.UserIn.Praise0_Input in_SubSet,
             FLORENCE.Frame.Cli.Dat.UserOut.Praise0_Output out_SubSet

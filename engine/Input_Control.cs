@@ -57,17 +57,18 @@ namespace FLORENCE.Frame.Cli.Dat.In
                 if (isSelected_PraiseEventId[praiseEventId] == true)
                 {
                     Framework.GetClient().GetData().SetThirdInputBuffer(new FLORENCE.Frame.Cli.Dat.Input());
-                    SelectSetInputSubset(praiseEventId);
-                    LoadInputSubset(praiseEventId);
+                    SelectSetIntputSubset(praiseEventId);
+                    LoadValuesInToInputSubset(praiseEventId);
                     Framework.GetClient().GetData().GetData_Control().PushToStackOfInputActions(
                         Framework.GetClient().GetData().GetStackOfInputActions(),
                         Framework.GetClient().GetData().GetThirdInputBuffer()
                     );
+                    Framework.GetClient().GetData().GetData_Control().SetFlag_TransmitInputStackLoaded(true);
                     isSelected_PraiseEventId[praiseEventId] = false;
                 }
             }
         }
-        private void LoadInputSubset(
+        private void LoadValuesInToInputSubset(
             int praiseEventId
         )
         {
@@ -93,7 +94,7 @@ namespace FLORENCE.Frame.Cli.Dat.In
 //===
             }
         }
-        private void SelectSetInputSubset(
+        private void SelectSetIntputSubset(
             int praiseEventId
         )
         {

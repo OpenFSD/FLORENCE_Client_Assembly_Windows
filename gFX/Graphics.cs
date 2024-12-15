@@ -194,8 +194,6 @@ namespace FLORENCE.Frame.Cli.Dat.Out
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Framework.GetClient().GetData().Flip_InBufferToWrite();
-
             base.OnUpdateFrame(e);
 
             if (!IsFocused) // Check to see if the window is focused

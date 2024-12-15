@@ -1,5 +1,4 @@
-﻿using FLORENCE.Frame.Cli.Algo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +9,9 @@ namespace FLORENCE.Frame.Cli
     public class Algorithms
     {
         static private FLORENCE.Frame.Cli.Algo.Concurrent[] concurrent;
-        //static private FLORENCE.Frame.Cli.Algo.Game gameAlgorithms;
         static private FLORENCE.Frame.Cli.Algo.IO_ListenRespond io_ListenRespond;
         static private FLORENCE.Frame.Cli.Algo.Concurrent new_Concurrent;
+        static private FLORENCE.Frame.Cli.Algo.User_Alg user_I;
 
         public Algorithms(int numberOfCores) 
         {
@@ -22,8 +21,8 @@ namespace FLORENCE.Frame.Cli
                 concurrent[index] = new FLORENCE.Frame.Cli.Algo.Concurrent();
                 while (concurrent[index] == null) { /* Wait while is created */ }
             }
-            //gameAlgorithms = new FLORENCE.Frame.Cli.Algo.Game();
-            //while (gameAlgorithms == null) { /* Wait while is created */ }
+            user_I = new FLORENCE.Frame.Cli.Algo.User_Alg();
+            while (user_I == null) { /* Wait while is created */ }
 
             System.Console.WriteLine("FLORENCE: Algorithms");//TEST
         }
@@ -45,7 +44,7 @@ namespace FLORENCE.Frame.Cli
             io_ListenRespond.InitialiseControl();
         }
 
-       // public FLORENCE.Frame.Cli.Algo.Game GetGameAlgorithms()
+       // public FLORENCE.Frame.Cli.Algo.User_Alg GetGameAlgorithms()
        // {
        //     return gameAlgorithms;
        // }

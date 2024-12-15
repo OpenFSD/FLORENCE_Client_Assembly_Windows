@@ -36,7 +36,30 @@ namespace FLORENCE.Frame.Cli.Algo
                 {
                     case true:
                         {
-
+                            while(Framework.GetClient().GetData().GetData_Control().GetFlag_TransmitInputStackLoaded())
+                            {
+                                Framework.GetClient().GetExecute().GetWriteEnable().Write_Start(
+                                Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                                threadId,
+                                Framework.GetClient().GetGlobal().Get_NumCores(),
+                                Framework.GetClient().GetGlobal()
+                            );
+                                Framework.GetClient().GetData().GetData_Control().PopFromStackOfInputActions(
+                                    Framework.GetClient().GetData().GetTransmitInputBuffer(),
+                                    Framework.GetClient().GetData().GetStackOfInputActions()
+                                );
+                                Networking.CreateAndSendNewMessage(
+                                    Framework.GetClient().GetData().GetTransmitInputBuffer().GetPraiseEventId()
+                                );
+                                
+                                Framework.GetClient().GetExecute().GetWriteEnable().Write_End(
+                                    Framework.GetClient().GetExecute().GetWriteEnable().GetWriteEnable_Contorl(),
+                                    threadId,
+                                    Framework.GetClient().GetGlobal().Get_NumCores(),
+                                    Framework.GetClient().GetGlobal()
+                                );
+                            }
+                            
                             break;
                         }
                     case false:

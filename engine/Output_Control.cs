@@ -54,14 +54,14 @@ namespace FLORENCE.Frame.Cli.Dat.Out
             {
                 if (isSelected_PraiseEventId[praiseEventId_B] == true)
                 {
-                    SelectSetOutputSubsetForGivenPraiseEventId(praiseEventId_B);
+                    SelectSetOutputSubset(praiseEventId_B);
                     
                     Networking.CreateAndSendNewMessage(praiseEventId_B);
                     isSelected_PraiseEventId[praiseEventId_B] = false;
                 }
             }
         }
-        void SelectSetOutputSubsetForGivenPraiseEventId(
+        void SelectSetOutputSubset(
             int praiseEventId
         )
         {

@@ -10,11 +10,11 @@ namespace FLORENCE.Frame.Cli.Exe
 {
     public class WriteEnable
     {
-        static private FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control execute_Control = null;
+        static private FLORENCE.Frame.Cli.Exe.Wrt.WriteEnable_Control write_Control = null;
 
         public WriteEnable() 
         {
-            execute_Control = null;
+            write_Control = null;
         }
 
         public void Initialise_Control(
@@ -22,12 +22,12 @@ namespace FLORENCE.Frame.Cli.Exe
             int numberOfCores
         )
         {
-            execute_Control = new FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control(global, numberOfCores);
-            while (execute_Control == null) { /* wait untill created */ }
+            write_Control = new FLORENCE.Frame.Cli.Exe.Wrt.WriteEnable_Control(global, numberOfCores);
+            while (write_Control == null) { /* wait untill created */ }
         }
 
         public void Write_End(
-            FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control execute_Control,
+            FLORENCE.Frame.Cli.Exe.Wrt.WriteEnable_Control write_Control,
             int coreId,
             int numberOfCores,
             FLORENCE.Frame.Cli.Global global
@@ -35,52 +35,52 @@ namespace FLORENCE.Frame.Cli.Exe
         {
             for (int index = 0; index < 2; index++)
             {
-                execute_Control.SetFlag_writeState(coreId, index, global.GetConst_Write_IDLE(index));
+                write_Control.SetFlag_writeState(coreId, index, global.GetConst_Write_IDLE(index));
             }
-            execute_Control.Set_new_coreIdForWritePraiseIndex(execute_Control.Get_coreIdForWritePraiseIndex() + 1);
-            if (execute_Control.Get_new_coreIdForWritePraiseIndex() == 3)
+            write_Control.Set_new_coreIdForWritePraiseIndex(write_Control.Get_coreIdForWritePraiseIndex() + 1);
+            if (write_Control.Get_new_coreIdForWritePraiseIndex() == 3)
             {
-                execute_Control.Set_new_coreIdForWritePraiseIndex(0);
+                write_Control.Set_new_coreIdForWritePraiseIndex(0);
             }
-            execute_Control.WriteQue_Update(
+            write_Control.WriteQue_Update(
                 numberOfCores
             );
-            execute_Control.WriteEnable_SortQue(
+            write_Control.WriteEnable_SortQue(
                 numberOfCores,
                 global
             );
-            execute_Control.SetFlag_readWrite_Open(false);
+            write_Control.SetFlag_readWrite_Open(false);
         }
 
         public void Write_Start(
-            FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control execute_Control,
+            FLORENCE.Frame.Cli.Exe.Wrt.WriteEnable_Control write_Control,
             int coreId,
             int numberOfCores,
             FLORENCE.Frame.Cli.Global global
         )
         {
-            execute_Control.WriteEnable_Request(
+            write_Control.WriteEnable_Request(
                 coreId,
                 numberOfCores,
                 global
             );
-            execute_Control.WriteQue_Update(
+            write_Control.WriteQue_Update(
                 numberOfCores
             );
-            execute_Control.WriteEnable_SortQue(
+            write_Control.WriteEnable_SortQue(
                 numberOfCores,
                 global
             );
-            execute_Control.WriteEnable_Activate(
+            write_Control.WriteEnable_Activate(
                 coreId,
                 global,
                 numberOfCores
             );
         }
 
-        public FLORENCE.Frame.Cli.Exe.Wrt.Execute_Control GetWriteEnable_Contorl()
+        public FLORENCE.Frame.Cli.Exe.Wrt.WriteEnable_Control GetWriteEnable_Contorl()
         {
-            return execute_Control;
+            return write_Control;
         }
     }
 }

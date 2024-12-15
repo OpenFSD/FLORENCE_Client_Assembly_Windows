@@ -1,4 +1,4 @@
-﻿using FLORENCE.Frame.Cli.Algo.Conc;
+﻿using FLORENCE_Client_Assembly_Windows.engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FLORENCE.Frame.Cli.Algo
-{ 
+{
     public class Concurrent
     {
-        static private FLORENCE.Frame.Cli.Algo.Conc.Concurrent_Control concurrent_Control;
+        static private Concurrent_Control concurrent_Control;
         public Concurrent() 
         {
             concurrent_Control = null;
